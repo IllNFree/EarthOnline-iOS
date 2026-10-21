@@ -96,6 +96,9 @@ struct AchStats {
     var blankTitleTries: Int = 0
     var throwbackSeen: Int = 0
     var memoryPhotos: Int = 0
+    // v1.0.6：新功能成就指标（笔记系统重构 / 外观自定义）
+    var longMemos: Int = 0          // 正文 ≥300 字的长文笔记条数
+    var appearanceTuned: Int = 0    // 卡片 / 壁纸不透明度是否被调过（0 / 1）
 }
 
 // MARK: - 自动成就规则
@@ -171,6 +174,11 @@ enum AutoRules {
                  current: { [$0.tasksDone >= 20, $0.items >= 20, $0.collections >= 10, $0.memos >= 10, $0.locations >= 5].filter { $0 }.count }),
         AutoRule(key: "grand_slam", title: "大满贯", desc: "任务 / 物品 / 收藏 / 日志 / 足迹各达到 20", category: "general",
                  goal: 5, test: { multiCount($0, threshold: 20) == 5 }, current: { multiCount($0, threshold: 20) }),
+        // v1.0.6：新功能成就（笔记系统重构 / 外观自定义；与 Android canonical 对齐）
+        AutoRule(key: "notes_hundred", title: "百篇成册", desc: "累计写下 100 条笔记", category: "memo", goal: 100, current: { $0.memos }),
+        AutoRule(key: "memo_long", title: "长文作者", desc: "写下第一条正文 ≥300 字的笔记", category: "memo", goal: 1, current: { $0.longMemos }),
+        AutoRule(key: "glass_tuner", title: "手感调校师", desc: "第一次调整卡片或壁纸不透明度", category: "general",
+                 goal: 1, test: { $0.appearanceTuned > 0 }, current: { $0.appearanceTuned }),
         // 彩蛋
         AutoRule(key: "egg_walmart", title: "购物袋玩家", desc: "把性别设置成「沃尔玛购物袋」", category: "egg",
                  goal: 1, test: { $0.gender == "walmart" }, current: { $0.gender == "walmart" ? 1 : 0 }),

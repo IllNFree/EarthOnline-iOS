@@ -115,6 +115,14 @@ final class LifeEngine {
         stats.blankTitleTries = defaults.integer(forKey: "egg_blank_title_tries")
         stats.throwbackSeen = defaults.integer(forKey: "egg_throwback_seen")
         stats.memoryPhotos = collections.filter { $0.category == "memory_album" }.count
+
+        // v1.0.6：新功能成就指标
+        //   - 长文笔记：正文 ≥300 字
+        //   - 外观调校：壁纸不透明度被改过（UserDefaults 里出现该键即为改动过，默认值不落盘）
+        stats.longMemos = memos.filter { $0.text.count >= 300 }.count
+        if defaults.object(forKey: SettingKeys.wallpaperAlpha) != nil {
+            stats.appearanceTuned = 1
+        }
         return stats
     }
 
