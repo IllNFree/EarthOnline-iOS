@@ -14,8 +14,8 @@ struct UpdateAlert: Identifiable, Equatable {
 @MainActor
 final class VersionCheckService {
     /// 仓库 Releases 页面（浏览器打开用）
-    static let releasesPage = URL(string: "https://github.com/FreeMentalIllness/EarthOnline-iOS/releases")!
-    private static let apiURL = URL(string: "https://api.github.com/repos/FreeMentalIllness/EarthOnline-iOS/releases/latest")!
+    static let releasesPage = URL(string: "https://github.com/IllNFree/EarthOnline-iOS/releases")!
+    private static let apiURL = URL(string: "https://api.github.com/repos/IllNFree/EarthOnline-iOS/releases/latest")!
     private static let lastAutoCheckKey = "last_update_check_at"
     private static let autoCheckMinInterval: TimeInterval = 24 * 3600
 
